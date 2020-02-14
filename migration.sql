@@ -1,0 +1,41 @@
+CREATE TABLE IF NOT EXISTS `import` (
+  `import_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `import_key` VARCHAR(36) NULL DEFAULT NULL,
+  `import_file_name` VARCHAR(245) NULL DEFAULT NULL,
+  `import_file_path` VARCHAR(245) NULL DEFAULT NULL,
+  `import_status` TINYINT(1) NULL DEFAULT 1 COMMENT 'TYPE 1: PENDING\nTYPE 2: INITIALIZED\nTYPE 3: PROCESSED',
+  `import_log_json` LONGTEXT NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `modified_at` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`import_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `user` (
+  `user_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `user_key` VARCHAR(36) NULL DEFAULT NULL,
+  `first_name` VARCHAR(245) NULL DEFAULT NULL,
+  `last_name` VARCHAR(245) NULL DEFAULT NULL,
+  `email` VARCHAR(254) NULL DEFAULT NULL,
+  `mobile_number` VARCHAR(10) NULL DEFAULT NULL,
+  `gender` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `employee` (
+  `employee_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `employee_key` VARCHAR(36) NULL DEFAULT NULL,
+  `user_id` BIGINT(20) NULL DEFAULT NULL,
+  `employee_code` VARCHAR(45) NULL DEFAULT NULL,
+  `experience` INT(11) NULL DEFAULT 0 COMMENT 'in months',
+  `salary` DOUBLE(10,2) NULL DEFAULT NULL,
+  PRIMARY KEY (`employee_id`),
+  INDEX `fk_employee_user_idx` (`user_id` ASC),
+  CONSTRAINT `fk_employee_user`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `user` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
