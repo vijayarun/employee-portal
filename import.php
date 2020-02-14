@@ -212,8 +212,12 @@ if ($count !== 0) {
                             .prop('disabled', true)
                             .html('<span class="spinner-grow spinner-grow-sm"></span>&nbsp; Uploading ...');
                     },
-                }).done(function () {
-                    console.log('done');
+                }).done(function (json) {
+                    json = JSON.parse(json);
+                    alert(json.msg);
+                    if (parseInt(json.status) === 1) {
+                        window.location.reload();
+                    }
                 }).always(function () {
                     setTimeout(function () {
                         $btn.prop('disabled', false)

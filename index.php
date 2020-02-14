@@ -55,12 +55,12 @@ if ($count !== 0) {
         <div class="container">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Import Management</h1>
+                    <h1 class="m-0 text-dark">Employee Management</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item active">Import Management</li>
+                        <li class="breadcrumb-item active">Employee Management</li>
                     </ol>
                 </div>
             </div>
@@ -75,7 +75,7 @@ if ($count !== 0) {
                 <div class="col-lg-12">
                     <div class="card card-primary card-outline">
                         <div class="card-header">
-                            <h5 class="card-title m-0">Import History</h5>
+                            <h5 class="card-title m-0">Employee Management</h5>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered">
@@ -118,7 +118,7 @@ if ($count !== 0) {
                                         $no++;
                                     }
                                 } else {
-                                    echo '<tr class="table-danger"><td colspan="7" class="text-center">No Records found!</td></tr>';
+                                    echo '<tr class="table-danger"><td colspan="8" class="text-center">No Records found!</td></tr>';
                                 }
                                 ?>
                                 </tbody>

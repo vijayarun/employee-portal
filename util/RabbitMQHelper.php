@@ -34,7 +34,9 @@ class RabbitMQHelper
      */
     public function __construct()
     {
-        $this->connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+        $config = (require __DIR__ . './../config.php')['queue'];
+
+        $this->connection = new AMQPStreamConnection($config['host'], $config['port'], $config['username'], $config['password']);
         $this->channel = $this->connection->channel();
     }
 

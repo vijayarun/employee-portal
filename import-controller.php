@@ -10,7 +10,7 @@ $action = Helper::getArrayValue($_GET, 'action');
 
 switch ($action) {
     case 'upload':
-        $response = ['status' => 0, 'msg' => ''];
+        $response = ['status' => 0, 'msg' => 'Task added to queue'];
 
         $file = Helper::getArrayValue($_FILES, 'import_file', []);
 

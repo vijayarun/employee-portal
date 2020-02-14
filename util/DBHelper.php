@@ -27,8 +27,14 @@ class DBHelper
      */
     public function __construct()
     {
+        $config = (require __DIR__ . './../config.php')['db'];
+
         try {
-            $this->db = new PDO('mysql:host=localhost;dbname=employee-portal', 'root', 'vijay');
+            $this->db = new PDO(
+                "mysql:host={$config['host']};dbname={$config['name']}",
+                $config['username'],
+                $config['password'],
+            );
         } catch (PDOException $e) {
             die('Error!: ' . $e->getMessage());
         }

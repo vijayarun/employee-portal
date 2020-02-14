@@ -1,41 +1,103 @@
-CREATE TABLE IF NOT EXISTS `import` (
-  `import_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `import_key` VARCHAR(36) NULL DEFAULT NULL,
-  `import_file_name` VARCHAR(245) NULL DEFAULT NULL,
-  `import_file_path` VARCHAR(245) NULL DEFAULT NULL,
-  `import_status` TINYINT(1) NULL DEFAULT 1 COMMENT 'TYPE 1: PENDING\nTYPE 2: INITIALIZED\nTYPE 3: PROCESSED',
-  `import_log_json` LONGTEXT NULL DEFAULT NULL,
-  `created_at` DATETIME NULL DEFAULT NULL,
-  `modified_at` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`import_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+-- --------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `user` (
-  `user_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `user_key` VARCHAR(36) NULL DEFAULT NULL,
-  `first_name` VARCHAR(245) NULL DEFAULT NULL,
-  `last_name` VARCHAR(245) NULL DEFAULT NULL,
-  `email` VARCHAR(254) NULL DEFAULT NULL,
-  `mobile_number` VARCHAR(10) NULL DEFAULT NULL,
-  `gender` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`user_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+--
+-- Table structure for table `employee`
+--
 
-CREATE TABLE IF NOT EXISTS `employee` (
-  `employee_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `employee_key` VARCHAR(36) NULL DEFAULT NULL,
-  `user_id` BIGINT(20) NULL DEFAULT NULL,
-  `employee_code` VARCHAR(45) NULL DEFAULT NULL,
-  `experience` INT(11) NULL DEFAULT 0 COMMENT 'in months',
-  `salary` DOUBLE(10,2) NULL DEFAULT NULL,
-  PRIMARY KEY (`employee_id`),
-  INDEX `fk_employee_user_idx` (`user_id` ASC),
-  CONSTRAINT `fk_employee_user`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+CREATE TABLE `employee` (
+  `employee_id` bigint(20) NOT NULL,
+  `employee_key` varchar(36) DEFAULT NULL,
+  `employee_code` varchar(45) DEFAULT NULL,
+  `employee_name` varchar(245) DEFAULT NULL,
+  `experience` int(11) DEFAULT '0' COMMENT 'in months',
+  `salary` double(10,2) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `modified_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_personal`
+--
+
+CREATE TABLE `employee_personal` (
+  `employee_personal_id` bigint(20) NOT NULL,
+  `employee_id` bigint(20) DEFAULT NULL,
+  `email` varchar(254) DEFAULT NULL,
+  `mobile_number` varchar(10) DEFAULT NULL,
+  `gender` enum('MALE','FEMALE') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `import`
+--
+
+CREATE TABLE `import` (
+  `import_id` bigint(20) NOT NULL,
+  `import_key` varchar(36) DEFAULT NULL,
+  `import_file_name` varchar(245) DEFAULT NULL,
+  `import_file_path` varchar(245) DEFAULT NULL,
+  `import_status` tinyint(1) DEFAULT '1' COMMENT 'TYPE 1: PENDING\nTYPE 2: INITIALIZED\nTYPE 3: PROCESSED',
+  `import_log_json` longtext,
+  `created_at` datetime DEFAULT NULL,
+  `modified_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `employee`
+--
+ALTER TABLE `employee`
+  ADD PRIMARY KEY (`employee_id`);
+
+--
+-- Indexes for table `employee_personal`
+--
+ALTER TABLE `employee_personal`
+  ADD PRIMARY KEY (`employee_personal_id`),
+  ADD KEY `fk_employee_personal_employee_idx` (`employee_id`);
+
+--
+-- Indexes for table `import`
+--
+ALTER TABLE `import`
+  ADD PRIMARY KEY (`import_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `employee`
+--
+ALTER TABLE `employee`
+  MODIFY `employee_id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `employee_personal`
+--
+ALTER TABLE `employee_personal`
+  MODIFY `employee_personal_id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `import`
+--
+ALTER TABLE `import`
+  MODIFY `import_id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `employee_personal`
+--
+ALTER TABLE `employee_personal`
+  ADD CONSTRAINT `fk_employee_personal_employee` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+COMMIT;
